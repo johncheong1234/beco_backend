@@ -30,7 +30,7 @@ app.get('/', async (req, res) => {
 
 app.post('/records',jsonParser, async (req, res) => {
     let data = req.body;
-    let startDate = data.date
+    let startDate = data.startDate
     let inspector = data.inspector
     let endDate = data.endDate
     let block = data.block
