@@ -2,9 +2,11 @@ import dotenv from "dotenv";
 import { MongoClient } from "mongodb";
 import express from 'express';
 import bodyParser from "body-parser";
+import cors from "cors";
 dotenv.config();
 
 const app = express();
+app.use(cors()) 
 
 const connectionString = process.env.MONGODB_URI || "";
 const client = new MongoClient(connectionString);
