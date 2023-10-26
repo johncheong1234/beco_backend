@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import { MongoClient } from "mongodb";
 import express from 'express';
+import bodyParser from "body-parser";
 dotenv.config();
 
 const app = express();
@@ -14,6 +15,7 @@ try {
   console.error(e);
 }
 let db = conn.db("beco");
+var jsonParser = bodyParser.json()
 
 app.get('/', async (req, res) => {
     let records = await db.collection('records');
@@ -23,6 +25,16 @@ app.get('/', async (req, res) => {
     }).toArray();
     res.send(allRecords)
 });
+
+app.post('/records',jsonParser, async (req, res) => {
+    let data = req.body;
+    let records = await db.collection('records');
+    const allRecords = await records.find(
+        data
+    ).toArray();
+    res.send(allRecords)
+})
+ 
 
 // Server listen
 app.listen(3001, () => console.log("Server listening to port 3001"));
