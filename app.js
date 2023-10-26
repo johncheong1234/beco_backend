@@ -17,7 +17,10 @@ let db = conn.db("beco");
 
 app.get('/', async (req, res) => {
     let records = await db.collection('records');
-    const allRecords = await records.find().toArray();
+    const allRecords = await records.find({
+        date: { $gte: new Date('2023-10-01T18:00:00.000Z'), 
+                $lte: new Date('2023-10-04T18:00:00.000Z') } 
+    }).toArray();
     res.send(allRecords)
 });
 
