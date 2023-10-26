@@ -28,9 +28,24 @@ app.get('/', async (req, res) => {
 
 app.post('/records',jsonParser, async (req, res) => {
     let data = req.body;
+    let startDate = data.date
+    let inspector = data.inspector
+    let endDate = data.endDate
+    let block = data.block
+    let inspectionType = data.inspectionType
+    let estate = data.estate
     let records = await db.collection('records');
     const allRecords = await records.find(
-        data
+        {
+            inspector,
+            block,
+            estate,
+            inspectionType,
+            date: {
+                $gte: new Date(startDate), 
+                $lte: new Date(endDate)
+            }
+        }
     ).toArray();
     res.send(allRecords)
 })
